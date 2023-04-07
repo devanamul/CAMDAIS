@@ -16,3 +16,15 @@ class student(models.Model):
 	author = author = models.ForeignKey(User, on_delete=models.CASCADE)
 	level = models.IntegerField()
 	status = models.IntegerField()
+
+class classes(models.Model):
+	Level = models.IntegerField()
+	Maths_Anxiety_symptoms = models.BooleanField(default=True)
+	Past_Experience = models.BooleanField(default=True)
+	Learning_Habit = models.BooleanField(default=True)
+	IQ = models.BooleanField(default=True)
+	Arithmetic = models.BooleanField(default=True)
+	Geometry = models.BooleanField(default=True)
+	Algebra = models.BooleanField(default=True)
+	Numerical_skill = models.BooleanField(default=True)
+	Working_Memory = models.BooleanField(default=True)
