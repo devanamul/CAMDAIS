@@ -37,3 +37,9 @@ class test(models.Model):
 	ans2 = models.CharField(max_length=150)
 	ans3 = models.CharField(max_length=150)
 	ans4 = models.CharField(max_length=150)
+
+class currentInstituteTest(models.Model):
+	institute = models.ForeignKey(institute, on_delete=models.CASCADE)
+	class_id =  models.ForeignKey(classes, on_delete=models.CASCADE)
+	startDate = models.DateTimeField()
+	endDate = models.DateTimeField()
