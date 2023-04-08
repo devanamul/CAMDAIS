@@ -43,3 +43,9 @@ class currentInstituteTest(models.Model):
 	class_id =  models.ForeignKey(classes, on_delete=models.CASCADE)
 	startDate = models.DateTimeField()
 	endDate = models.DateTimeField()
+
+class currentGeneralTest(models.Model):
+	author = models.ForeignKey(User, on_delete=models.CASCADE)
+	class_id =  models.ForeignKey(classes, on_delete=models.CASCADE)
+	startDate = models.DateTimeField()
+	endDate = models.DateTimeField()
