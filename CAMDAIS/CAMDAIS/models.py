@@ -28,3 +28,12 @@ class classes(models.Model):
 	Algebra = models.BooleanField(default=True)
 	Numerical_skill = models.BooleanField(default=True)
 	Working_Memory = models.BooleanField(default=True)
+
+class test(models.Model):
+	class_id =  models.ForeignKey(classes, on_delete=models.CASCADE)
+	name = models.CharField(max_length=100)
+	question = models.CharField(max_length=150)
+	rightAns = models.CharField(max_length=150)
+	ans2 = models.CharField(max_length=150)
+	ans3 = models.CharField(max_length=150)
+	ans4 = models.CharField(max_length=150)
