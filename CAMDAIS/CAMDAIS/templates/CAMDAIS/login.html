@@ -15,6 +15,16 @@
                 <form action="" method="POST"> 
                     <form action="" method="POST">
                     	<input name="username" type="text" class="input-box" placeholder="User Name" required name="" id="">
+                        <input name="pass" type="password" class="input-box" placeholder="password" required name="" id="">
+                        <button name='login' type="submit" class="submit-btn">logIn</button>
+                    </form>
+                    <button type="button" class="btn" onclick="openRegister()">Create New Account</button>
+                    <a href="">Forgotten password?</a>
+            </div>
+            <div class="card-back">
+                <form action="" method="POST">
+                    <h2>REGISTER</h2>
+                    <input name="username" type="text" class="input-box" placeholder="User Name" required name="" id="">
                         <input name="email" type="text" class="input-box" placeholder="User Name" required name="" id="">
 
                         <input name="first_name" type="text" class="input-box" placeholder="User Name" required name="" id="">
@@ -22,11 +32,9 @@
                         <input name="last_name" type="text" class="input-box" placeholder="User Name" id="">
 
                         <input name="pass" type="password" class="input-box" placeholder="password" required name="" id="">
-                        <button name='login' type="submit" class="submit-btn">logIn</button>
-
-                    </form>
-                    <button type="button" class="btn" onclick="openRegister()">Create New Account</button>
-                    <a href="">Forgotten password?</a>
+                    <button name="create" type="submit" class="submit-btn">Create</button>
+                    <button type="button" class="btn" onclick="openLogin()">I have an account</button>
+                </form>
             </div>
         </div>
     </div>
