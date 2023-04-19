@@ -20,3 +20,14 @@
     background: #c92e2ed8;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
+
+.second-banner {
+    margin-top: 400px;
+    text-align: center;
+}
+
+.footer-icons {
+    font-size: 25px;
+    text-align: right;
+    margin-right: 50px;
+}
