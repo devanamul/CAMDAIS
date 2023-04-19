@@ -9,5 +9,14 @@
 }
 
 .banner-card {
-   
+    height: 200px;
+    width: 22%;
+    padding: 15px;
+    text-align: center;
+    border-radius: 15px;
+    margin-left: 100px;
+    margin-top: 120px;
+    color: white;
+    background: #c92e2ed8;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
