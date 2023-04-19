@@ -14,17 +14,19 @@
             <!-- Log in part -->
             <div class="card-front">
                 <h2 style="font-family: cursive; color:white; text-align: center;">CAMDAIS</h2>
-                <form action="" method="POST"> 
-                    <form action="" method="POST">
-                    	<input name="username" type="text" class="input-box" placeholder="User Name" required name="" id="">
-                        <input name="pass" type="password" class="input-box" placeholder="password" required name="" id="">
-                        <button name='login' type="submit" class="submit-btn">logIn</button>
-                    </form>
-                    <button type="button" class="btn" onclick="openRegister()">Create New Account</button>
-                    <a href="">Forgotten password?</a>
+                 
+                <form action="{% url 'SignIn' %}" method="POST">
+                    {% csrf_token %}
+                	<input name="username" type="text" class="input-box" placeholder="User Name" required name="" id="">
+                    <input name="pass" type="password" class="input-box" placeholder="password" required name="" id="">
+                    <button name='login' type="submit" class="submit-btn">logIn</button>
+                </form>
+                <button type="button" class="btn" onclick="openRegister()">Create New Account</button>
+                <a href="">Forgotten password?</a>
             </div>
             <div class="card-back">
-                <form action="" method="POST">
+                <form action="{% url 'SignIn' %}" method="POST">
+                    {% csrf_token %}
                     <h2>REGISTER</h2>
                     <input name="username" type="text" class="input-box" placeholder="User Name" required name="" id="">
                         <input name="email" type="text" class="input-box" placeholder="User Name" required name="" id="">
@@ -33,8 +35,10 @@
 
                         <input name="last_name" type="text" class="input-box" placeholder="User Name" id="">
 
-                        <input name="pass" type="password" class="input-box" placeholder="password" required name="" id="">
-                    <button name="create" type="submit" class="submit-btn">Create</button>
+                        <input name="password" type="password" class="input-box" placeholder="password" required name="" id="">
+
+                        <input name="password2" type="password" class="input-box" placeholder="Confirm password" required name="" id="">
+                    <button name="SignUp" type="submit" class="submit-btn">Create</button>
                     <button type="button" class="btn" onclick="openLogin()">I have an account</button>
                 </form>
             </div>
