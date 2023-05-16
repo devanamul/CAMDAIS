@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'camdais'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6295A0B3281A4564B0495E1624C36688 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A3025936904741139549C835334E1AD2 }}
