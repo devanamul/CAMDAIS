@@ -19,24 +19,21 @@
 
 <!-- Navigation section start -->
     <section>
-        <nav class="navbar navbar-expand-lg bg-danger">
+        <nav style="background: #83ACB5; " class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="navbar-brand text-light" href="#">LOGO</a>
+                <a class="navbar-brand text-light" href="{% url 'homepage' %}">CAMDAIS</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
+                    <ul style="margin-right: 0rem!important;" class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
                         <li class="nav-item">
-                            <a class="nav-link active text-light" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active text-light" aria-current="page" href="{% url 'homepage' %}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="#">Log In</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="#">Sign Up</a>
+                            <a class="nav-link text-light" href="{% url 'SignIn' %}">SignIn/SignUp</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" href="#">Contact</a>
@@ -54,7 +51,7 @@
      <!-- Banner section start -->
     <section>
         <div class="banner-image">
-            <div class="banner-card">
+            <div style="background: #83ACB5" class="banner-card">
                 <div class="card-body">
                     <h5 class="card-title">KNOW ABOUT US</h5>
                     <!-- <h5 class="card-title">You into Shape</h5> -->
@@ -88,7 +85,7 @@
                 delectus libero!</p>
         </div>
         <div class="col-md-5 mt-5 ">
-            <img class="img-fluid" src="./img/OURMISSION.jpg" alt="">
+            <img class="img-fluid" src="../static/CAMDAIS/OURMISSION.jpg" alt="">
         </div>
     </div>
 
@@ -105,7 +102,7 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col">
                 <div class="card" style="width: 18rem;">
-                    <img src="./img/AB-ADARSHA.jpg" class="card-img-top" alt="...">
+                    <img src="../static/CAMDAIS/AB-ADARSHA.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                     </div>
                 </div>
@@ -114,7 +111,7 @@
             </div>
             <div class="col">
                 <div class="card" style="width: 18rem;">
-                    <img src="./img/MA-ROSHID.jpg" class="card-img-top" alt="...">
+                    <img src="../static/CAMDAIS/MA-ROSHID.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                     </div>
                 </div>
@@ -124,7 +121,7 @@
 
             <div class="col">
                 <div class="card" style="width: 18rem;">
-                    <img src="./img/MK-ACADEMY.jpg" class="card-img-top" alt="...">
+                    <img src="../static/CAMDAIS/MK-ACADEMY.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                     </div>
                 </div>
@@ -139,7 +136,7 @@
 
     <div class="container row mx-5 my-5">
         <div class="col-md-6 mt-5">
-            <img class="img-fluid" src="./img/kids1.jpg" alt="">
+            <img class="img-fluid" src="../static/CAMDAIS/kids1.jpg" alt="">
         </div>
 
         <div class="col-md-6 my-5 ">
@@ -162,12 +159,12 @@
         </div>
 
         <div class="col-md-6 mb-5 ">
-            <img class="img-fluid" src="./img/Aboutus.jpg" alt="">
+            <img class="img-fluid" src="../static/CAMDAIS/Aboutus.jpg" alt="">
         </div>
     </div>
 
      <!-- Footer section starts here -->
-    <section class="container-fluid pt-5 bg-danger">
+    <section style="background: #83ACB5" class="container-fluid pt-5">
         <div class="row">
             <div class="col-md-4 ms-5 text-light">
                 <h4>CONTACT</h4>

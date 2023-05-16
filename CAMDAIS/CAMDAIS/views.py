@@ -8,7 +8,8 @@ def home(request):
 	return render(request, "CAMDAIS/home.html")
 
 def dashboard(request):
-	return render(request, "CAMDAIS/dashboard.html")
+	u = request.user
+	return render(request, "CAMDAIS/dashboard.html", {"user": u})
 
 def signin(request):
 	if request.method == 'GET':
@@ -45,3 +46,7 @@ def signin(request):
 		create_user.save()
 		messages.success(request, 'Successfully registered!')
 		return redirect('SignIn')
+
+def signout(request):
+	logout(request)
+	return redirect('homepage')
