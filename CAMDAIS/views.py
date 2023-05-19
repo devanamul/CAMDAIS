@@ -47,6 +47,9 @@ def signin(request):
 		messages.success(request, 'Successfully registered!')
 		return redirect('SignIn')
 
+def insttuteForm(request):
+	return render(request, 'CAMDAIS/adminForm.html')
+
 def SuperUser(request):
 	return render(request, "CAMDAIS/superUser.html")
 
