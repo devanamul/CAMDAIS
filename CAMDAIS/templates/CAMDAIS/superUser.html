@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/71f85cf5f2.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js">
+    </script>
+    <link rel="stylesheet" href="../static/CAMDAIS/superUser.css">
+	<title>Super Admin</title>
+</head>
+<body>
+	<div style="background: #83ACB5; " class="ui basic icon top fixed inverted menu" >
+        <div class="item mid" ><a class="ui inverted header" href="{% url 'homepage' %}">CAMDAIS</a></div>
+
+        <div class="ui right secondary menu">
+            <a style="color: white;" class="item" href="">Home</a>
+            <a style="color: white;" class="item" href="">SignOut</a>
+        </div>
+        
+    </div>
+    <div class="pusher" style="height: 100%;">
+        <div class="ui container" style="padding-top: 100px; height: 100%;">
+            <a class="request" href="#">Institute Requests</a>
+            <a class="request" href="#">Test Case Control</a>
+        </div>
+    </div>
+    
+</body>
+<style type="text/css">
+	/* .ui.container{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	} */
+	/* .request{
+	width: 30%;
+	height: 15%;
+	background: #83ACB5;
+    color: white;
+    display: flex;
+	justify-content: center;
+    align-items: center;
+	margin: 20px 20px 40px 20px;
+	border-radius: 20px;
+	box-shadow: 0 0 40px 20px rgba(0, 0, 0, 0.411);
+    } */
+</style>
+</html>

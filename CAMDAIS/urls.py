@@ -23,5 +23,6 @@ urlpatterns = [
     path('signin/', views.signin, name='SignIn'),
     path('dashboard/', views.dashboard, name = 'Dashboard'),
     path('logout/', views.signout, name='Logout'),
+    path('superuser/', views.SuperUser, name='superUser'),
     
 ]

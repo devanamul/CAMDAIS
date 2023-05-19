@@ -3,7 +3,7 @@
     padding: 0;
 }
 body{
-    background-image: linear-gradient(rgba(184, 18, 18, 0.548),rgba(248, 9, 9, 0.534)),url("../media/CAMDAIS/aysabari.jpeg");
+    background-image: url("../CAMDAIS/Login-back.jpg");
     
 }
 .head{
@@ -42,23 +42,25 @@ body{
     height: 70%;
     background-position: center;
     background-size: cover;
-    background-color: rgba(86, 94, 94, 0.877);
+    background-color: #57757ca2;
     padding: 55px;
     box-sizing: border-box;
     backface-visibility: hidden;
-    box-shadow: 0 0 40px 20px rgba(0,0,0,0.26);
+    box-shadow: 0 0 40px 20px rgba(0, 0, 0, 0.671);
+    border-radius: 15px;
 }
 .card-back{
     position:absolute;
     width: 100%;
-    height: 100%;
+    height: 90%;
     background-position: center;
     background-size: cover;
-    background-color: rgba(86, 94, 94, 0.877);
+    background-color: #57757ca2;
     padding: 55px;
     box-sizing: border-box;
     backface-visibility: hidden;
-    box-shadow: 0 0 40px 20px rgba(0,0,0,0.26);
+    box-shadow: 0 0 40px 20px rgba(0, 0, 0, 0.671);
+    border-radius: 15px;
 }
 .card-back{
     transform: rotateY(180deg);

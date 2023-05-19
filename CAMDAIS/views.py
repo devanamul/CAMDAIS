@@ -47,6 +47,9 @@ def signin(request):
 		messages.success(request, 'Successfully registered!')
 		return redirect('SignIn')
 
+def SuperUser(request):
+	return render(request, "CAMDAIS/superUser.html")
+
 def signout(request):
 	logout(request)
 	return redirect('homepage')
