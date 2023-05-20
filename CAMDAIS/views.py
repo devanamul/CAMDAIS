@@ -2,14 +2,27 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
+from .models import institute, systemAdmin, student, classes, test, currentInstituteTest
 
 
 def home(request):
 	return render(request, "CAMDAIS/home.html")
 
 def dashboard(request):
+	userType = None;
 	u = request.user
-	return render(request, "CAMDAIS/dashboard.html", {"user": u})
+	is_admin = systemAdmin.objects.filter(author=u)
+	is_student = student.objects.filter(author=u)
+	my_institute = None
+	if is_admin.exists():
+		userType = 'admin'
+		print(userType)
+		is_admin = systemAdmin.objects.get(author=u)
+		my_institute = institute.objects.get(id=is_admin.institute.id)
+	elif is_student.exists():
+		userType = 'student'
+	print(u.first_name, userType)
+	return render(request, "CAMDAIS/dashboard.html", {"user": u, 'userType': userType, 'my_institute':  my_institute})
 
 def signin(request):
 	if request.method == 'GET':
@@ -48,7 +61,23 @@ def signin(request):
 		return redirect('SignIn')
 
 def insttuteForm(request):
-	return render(request, 'CAMDAIS/adminForm.html')
+	if request.method == 'GET':
+		return render(request, 'CAMDAIS/adminForm.html')
+	elif request.method == 'POST':
+		u = request.user
+		name = request.POST.get('instituteName')
+		instituteType = request.POST.get('InstituteType')
+		new_institute = institute(name=name, status = 0, instituteType=instituteType)
+		new_institute.save()
+		new_systemAdmin = systemAdmin(institute = new_institute, author = u, status = 0)
+		new_systemAdmin.save()
+
+		if new_institute.id and new_systemAdmin.id:
+			print("Ok")
+			return redirect('Dashboard')
+		else:
+			return render(request, 'CAMDAIS/adminForm.html', {'message': "something is wrong, try again"})
+
 
 def SuperUser(request):
 	return render(request, "CAMDAIS/superUser.html")

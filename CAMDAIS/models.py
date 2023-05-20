@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class institute(models.Model):
 	name = models.CharField(max_length=150)
 	status = models.IntegerField()
+	instituteType = models.CharField(max_length=15)
 
 class systemAdmin(models.Model):
 	institute = models.ForeignKey(institute, on_delete=models.CASCADE)

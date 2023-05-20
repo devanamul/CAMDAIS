@@ -19,7 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js">
     </script>
     <link rel="stylesheet" type="text/css" href="../static/CAMDAIS/adminForm.css">
-    <title>Dashboard</title>
+    <title>Institute Form</title>
 </head>
 
 <body>
@@ -62,13 +62,14 @@
             <!-- put everything here -->
            <div class="instituteForm">
                <div class="form-title">CREATE INSTITUTE</div>
-               <form class="main-form">
+               <form class="main-form" action="{% url 'InsttuteForm' %}" method="POST">
+                {% csrf_token %}
                    <input name="instituteName" type="text" class="input-box" placeholder="Input the institute name" required name="" id="">
                    <select class="ui dropdown" name="InstituteType">
                       <option value="">Select Instutute Type</option>
-                      <option value="Rice">Secondery School</option>
-                      <option value="Wheat">Heigher Secondery</option>
-                      <option value="Maize">University</option>
+                      <option value="school">Secondery School</option>
+                      <option value="college">Heigher Secondery</option>
+                      <option value="varsity">University</option>
                     </select>
                     <button name="create" type="submit" class="submit-btn">Create Institude</button> 
                </form>
