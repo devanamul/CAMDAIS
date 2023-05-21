@@ -60,6 +60,7 @@
     <div class="pusher" style="background: whitesmoke; height: 700px;">
         <div class="ui container" style="">
             <!-- put everything here -->
+            
            <div class="instituteForm">
                <div class="form-title">CREATE INSTITUTE</div>
                <form class="main-form" action="{% url 'InsttuteForm' %}" method="POST">
@@ -73,7 +74,11 @@
                     </select>
                     <button name="create" type="submit" class="submit-btn">Create Institude</button> 
                </form>
-
+               {% if message %}
+                <div class="ui floating message">
+                  <p>{{message}}</p>
+                </div>
+               {% endif %}
            </div>
         </div>
     </div>

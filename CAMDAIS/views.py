@@ -67,18 +67,20 @@ def insttuteForm(request):
 		u = request.user
 		name = request.POST.get('instituteName')
 		instituteType = request.POST.get('InstituteType')
-		new_institute = institute(name=name, status = 0, instituteType=instituteType)
-		new_institute.save()
-		new_systemAdmin = systemAdmin(institute = new_institute, author = u, status = 0)
-		new_systemAdmin.save()
+		current_institutes = institute.objects.filter(name = name)
+		if current_institutes is  None:
+			new_institute = institute(name=name, status = 0, instituteType=instituteType)
+			new_institute.save()
+			new_systemAdmin = systemAdmin(institute = new_institute, author = u, status = 0)
+			new_systemAdmin.save()
 
-		if new_institute.id and new_systemAdmin.id:
-			print("Ok")
-			return redirect('Dashboard')
+			if new_institute.id and new_systemAdmin.id:
+				print("Ok")
+				return redirect('Dashboard')
+			else:
+				return render(request, 'CAMDAIS/adminForm.html', {'message': "something is wrong, try again"})
 		else:
-			return render(request, 'CAMDAIS/adminForm.html', {'message': "something is wrong, try again"})
-
-
+			return render(request, 'CAMDAIS/adminForm.html', {'message': "Institute already exists, Enter valid institute name"})
 def SuperUser(request):
 	return render(request, "CAMDAIS/superUser.html")
 
