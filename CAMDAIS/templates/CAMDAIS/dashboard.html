@@ -34,7 +34,7 @@
         <a class="item" href="{% url 'StudentForm' %}"><i class="fa-solid fa-user me-2"></i>Assign as a Student</a>
         {% elif userType == "admin" %}
         <a class="item" href="#"><i class="fa-solid fa-building-columns me-2"></i>{{my_institute.name}}</a>
-        {% elif userType == "admin" %}
+        {% elif userType == "student" %}
         <a class="item" href="#"><i class="fa-solid fa-building-columns me-2"></i>{{my_institute.name}}</a>
         {% endif %}
         <a class="item"><i class="fa-solid fa-user-plus me-2"></i>Make test as a guest</a>

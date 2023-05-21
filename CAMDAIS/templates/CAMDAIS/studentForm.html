@@ -63,17 +63,16 @@
             
            <div class="instituteForm">
                <div class="form-title">ASSIGN STUDENT</div>
-               <form class="main-form" action="{% url 'InsttuteForm' %}" method="POST">
+               <form class="main-form" action="{% url 'StudentForm' %}" method="POST">
                 {% csrf_token %}
-                   
-                   <input name="instituteName" type="text" class="input-box" placeholder="Input the institute name" required name="" id="">
-                   <select class="ui dropdown" name="InstituteType">
-                      <option value="">Select Instutute Type</option>
-                      <option value="school">Secondery School</option>
-                      <option value="college">Heigher Secondery</option>
-                      <option value="varsity">University</option>
+                   <select class="ui dropdown" name="Institute">
+                    <option value="">Select Instutute</option>
+                    {% for institute in institutes %}
+                      <option value="{{institute.id}}">{{institute.name}}</option>
+                    {% endfor %}
                     </select>
-                    <button name="create" type="submit" class="submit-btn">Create Institude</button> 
+                   <input name="level" type="number" class="input-box" placeholder="Class" required name="" id="">
+                    <button name="create" type="submit" class="submit-btn">Assignment Request</button> 
                </form>
                {% if message %}
                 <div class="ui floating message">

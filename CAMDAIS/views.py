@@ -21,6 +21,8 @@ def dashboard(request):
 		my_institute = institute.objects.get(id=is_admin.institute.id)
 	elif is_student.exists():
 		userType = 'student'
+		is_student = student.objects.get(author=u)
+		my_institute = institute.objects.get(id=is_student.institute.id)
 	print(u.first_name, userType)
 	return render(request, "CAMDAIS/dashboard.html", {"user": u, 'userType': userType, 'my_institute':  my_institute})
 
@@ -83,7 +85,25 @@ def insttuteForm(request):
 			return render(request, 'CAMDAIS/adminForm.html', {'message': "Institute already exists, Enter valid institute name"})
 
 def studentForm(request):
-	return render(request, 'CAMDAIS/studentForm.html')
+	u = request.user
+	current_institutes = institute.objects.all()
+	if request.method == 'GET':
+		return render(request, 'CAMDAIS/studentForm.html', {"institutes" : current_institutes})
+	elif request.method == 'POST':
+		institute_id = request.POST.get('Institute')
+		level_str = request.POST.get('level')
+		level = int(level_str)
+		if 3 > level or level > 10:
+			return render(request, 'CAMDAIS/studentForm.html', {"institutes" : current_institutes, 'message': "this class is not exist, please enter a valid class number (3-10)"})
+		else:
+			my_institute = institute.objects.get(id = institute_id)
+			new_student = student(author = u, level = level, status = 0, institute = my_institute)
+			new_student.save()
+
+			if new_student.id:
+				return redirect('Dashboard')
+			else:
+				return render(request, 'CAMDAIS/studentForm.html', {"institutes" : current_institutes, 'message': "something is wrong, try again"})
 
 def SuperUser(request):
 	return render(request, "CAMDAIS/superUser.html")
