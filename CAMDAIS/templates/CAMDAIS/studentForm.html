@@ -18,25 +18,19 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js">
     </script>
-    <link rel="stylesheet" type="text/css" href="../static/CAMDAIS/Dashboard.css">
-    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="../static/CAMDAIS/adminForm.css">
+    <title>Institute Form</title>
 </head>
 
 <body>
     <div style="background: #83ACB5;
     border-radius: 56px;" class="ui sidebar vertical left inverted menu">
         <h5 style="display: flex; justify-content: center; align-items: center;" class="mt-5">Welcome</h5>
-        <p  style="display: flex; justify-content: center; align-items: center;" class="text-white mt-3">{{user.first_name}} {{user.last_name}}</p>
+        <p  style="display: flex; justify-content: center; align-items: center;" class="text-white mt-3"><!-- {{user.first_name}} {{user.last_name}} --></p>
         <p  style="display: flex; justify-content: center; align-items: center;">User</p>
         <br>
-        {% if userType is None %}
-        <a class="item" href="{% url 'InsttuteForm' %}"><i class="fa-solid fa-building-columns me-2"></i>Create Institute Account</a>
-        <a class="item" href="{% url 'StudentForm' %}"><i class="fa-solid fa-user me-2"></i>Assign as a Student</a>
-        {% elif userType == "admin" %}
-        <a class="item" href="#"><i class="fa-solid fa-building-columns me-2"></i>{{my_institute.name}}</a>
-        {% elif userType == "admin" %}
-        <a class="item" href="#"><i class="fa-solid fa-building-columns me-2"></i>{{my_institute.name}}</a>
-        {% endif %}
+        <a class="item"><i class="fa-solid fa-building-columns me-2"></i>Create Institute Account</a>
+        <a class="item"><i class="fa-solid fa-user me-2"></i>Assign as a Student</a>
         <a class="item"><i class="fa-solid fa-user-plus me-2"></i>Make test as a guest</a>
         <a class="item"><i class="fa-solid fa-star me-2"></i>Apear in a test</a>
         <a class="item"><i class="fa-solid fa-square-poll-vertical me-2"></i>Results</a>
@@ -64,20 +58,29 @@
     </div>  
 
     <div class="pusher" style="background: whitesmoke; height: 700px;">
-        <div class="ui container" style="padding-top: 100px; height: 100%;">
+        <div class="ui container" style="">
             <!-- put everything here -->
-            {% if messages %}
-            <div class="ui floating message">
-            {% for meaage in messages %}
-              <p>{{messages.message}}</p>
-            {% endfor %}
-            </div>
-            {% endif %}
-           <div class="dashboard">Dashboard</div>
-           <hr class="line">
-           <div style="background: #83ACB5; height: 20%; width: 90%; margin: 30px; display: flex; justify-content: center; align-items: center;">stsdfg</div>
-           <div style="background: #83ACB5; height: 20%; width: 90%; margin: 30px;">swfgsdfg</div>
-           <div style="background: #83ACB5; height: 20%; width: 90%; margin: 30px;">sfgsgsdg</div>
+            
+           <div class="instituteForm">
+               <div class="form-title">ASSIGN STUDENT</div>
+               <form class="main-form" action="{% url 'InsttuteForm' %}" method="POST">
+                {% csrf_token %}
+                   
+                   <input name="instituteName" type="text" class="input-box" placeholder="Input the institute name" required name="" id="">
+                   <select class="ui dropdown" name="InstituteType">
+                      <option value="">Select Instutute Type</option>
+                      <option value="school">Secondery School</option>
+                      <option value="college">Heigher Secondery</option>
+                      <option value="varsity">University</option>
+                    </select>
+                    <button name="create" type="submit" class="submit-btn">Create Institude</button> 
+               </form>
+               {% if message %}
+                <div class="ui floating message">
+                  <p>{{message}}</p>
+                </div>
+               {% endif %}
+           </div>
         </div>
     </div>
     

@@ -81,6 +81,10 @@ def insttuteForm(request):
 				return render(request, 'CAMDAIS/adminForm.html', {'message': "something is wrong, try again"})
 		else:
 			return render(request, 'CAMDAIS/adminForm.html', {'message': "Institute already exists, Enter valid institute name"})
+
+def studentForm(request):
+	return render(request, 'CAMDAIS/studentForm.html')
+
 def SuperUser(request):
 	return render(request, "CAMDAIS/superUser.html")
 
