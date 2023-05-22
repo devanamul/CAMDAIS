@@ -124,6 +124,24 @@ def insttutePage(request):
 			my_institute = institute.objects.get(id=is_student.institute.id)
 		return render(request, 'CAMDAIS/institutePage.html', {"user": u, 'userType': userType, 'my_institute':  my_institute})
 
+def studentPage(request):
+	if request.method == 'GET':
+		userType = None;
+		u = request.user
+		is_admin = systemAdmin.objects.filter(author=u)
+		is_student = student.objects.filter(author=u)
+		my_institute = None
+		if is_admin.exists():
+			userType = 'admin'
+			print(userType)
+			is_admin = systemAdmin.objects.get(author=u)
+			my_institute = institute.objects.get(id=is_admin.institute.id)
+		elif is_student.exists():
+			userType = 'student'
+			is_student = student.objects.get(author=u)
+			my_institute = institute.objects.get(id=is_student.institute.id)
+		return render(request, 'CAMDAIS/studentPage.html', {"user": u, 'userType': userType, 'my_institute':  my_institute})
+
 def makeTest(request):
 	userType = None;
 	u = request.user
