@@ -27,14 +27,18 @@
     border-radius: 56px;" class="ui sidebar vertical left inverted menu">
         <h5 style="display: flex; justify-content: center; align-items: center;" class="mt-5">Welcome</h5>
         <p  style="display: flex; justify-content: center; align-items: center;" class="text-white mt-3">{{user.first_name}} {{user.last_name}}</p>
+        {% if userType is None %}
         <p  style="display: flex; justify-content: center; align-items: center;">User</p>
         <br>
-        {% if userType is None %}
         <a class="item" href="{% url 'InsttuteForm' %}"><i class="fa-solid fa-building-columns me-2"></i>Create Institute Account</a>
         <a class="item" href="{% url 'StudentForm' %}"><i class="fa-solid fa-user me-2"></i>Assign as a Student</a>
         {% elif userType == "admin" %}
+        <p  style="display: flex; justify-content: center; align-items: center;">Institute Admin</p>
+        <br>
         <a class="item" href="#"><i class="fa-solid fa-building-columns me-2"></i>{{my_institute.name}}</a>
         {% elif userType == "student" %}
+        <p  style="display: flex; justify-content: center; align-items: center;">Student</p>
+        <br>
         <a class="item" href="#"><i class="fa-solid fa-building-columns me-2"></i>{{my_institute.name}}</a>
         {% endif %}
         <a class="item"><i class="fa-solid fa-user-plus me-2"></i>Make test as a guest</a>
