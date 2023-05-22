@@ -1,0 +1,19 @@
+.inner-container{
+	height: 20%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.inner-container > a{
+	height: 80%;
+	width: 30%;
+	background: #66929B;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 10px;
+	font-size: 25px;
+	color: white;
+}

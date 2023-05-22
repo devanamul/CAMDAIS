@@ -18,7 +18,7 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js">
     </script>
-    <link rel="stylesheet" type="text/css" href="../static/CAMDAIS/Dashboard.css">
+    <link rel="stylesheet" type="text/css" href="../static/CAMDAIS/institutePage.css">
     <title>Dashboard</title>
 </head>
 
@@ -70,18 +70,19 @@
     <div class="pusher" style="background: whitesmoke; height: 700px;">
         <div class="ui container" style="padding-top: 100px; height: 100%;">
             <!-- put everything here -->
-            {% if messages %}
-            <div class="ui floating message">
-            {% for meaage in messages %}
-              <p>{{messages.message}}</p>
-            {% endfor %}
+            <div style="font-size: 30px" class="dashboard">{{my_institute.name}}</div>
+            <hr class="line">
+            <div class="inner-container">
+                <a href="">Make Test</a>
+                <a href="">Test History</a>
             </div>
-            {% endif %}
-           <div class="dashboard">Dashboard</div>
-           <hr class="line">
-           <div style="background: #83ACB5; height: 20%; width: 90%; margin: 30px; display: flex; justify-content: center; align-items: center;">stsdfg</div>
-           <div style="background: #83ACB5; height: 20%; width: 90%; margin: 30px;">swfgsdfg</div>
-           <div style="background: #83ACB5; height: 20%; width: 90%; margin: 30px;">sfgsgsdg</div>
+            <div class="recent">
+                <label style="font-size: 30px">Recent Test</label>
+                <hr class="line">
+                <table>
+                    
+                </table>
+            </div>
         </div>
     </div>
     
