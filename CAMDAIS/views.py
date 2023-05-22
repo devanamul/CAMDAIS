@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import institute, systemAdmin, student, classes, test, currentInstituteTest
+from datetime import datetime, timedelta
 
 
 def home(request):
@@ -122,6 +123,60 @@ def insttutePage(request):
 			is_student = student.objects.get(author=u)
 			my_institute = institute.objects.get(id=is_student.institute.id)
 		return render(request, 'CAMDAIS/institutePage.html', {"user": u, 'userType': userType, 'my_institute':  my_institute})
+
+def makeTest(request):
+	userType = None;
+	u = request.user
+	is_admin = systemAdmin.objects.filter(author=u)
+	is_student = student.objects.filter(author=u)
+	my_institute = None
+	if is_admin.exists():
+		userType = 'admin'
+		is_admin = systemAdmin.objects.get(author=u)
+		my_institute = institute.objects.get(id=is_admin.institute.id)
+	elif is_student.exists():
+		userType = 'student'
+		is_student = student.objects.get(author=u)
+		my_institute = institute.objects.get(id=is_student.institute.id)
+	class_dict = {}
+	for i in range(3, 11):
+		key = "class " + str(i)
+		# print(key)
+		classN = classes.objects.get(Level=i)
+		true_count = 0
+		for each in ['Maths_Anxiety_symptoms', 'Past_Experience', 'Working_Memory', 'Numerical_skill', 'Algebra', 'Geometry', 'Arithmetic', 'Learning_Habit', 'IQ']:
+			if getattr(classN, each):
+				true_count += 1
+		class_dict[f'class_{i}'] = {'level': i, 'test': true_count}
+	if request.method == 'GET':
+		
+		# for key in class_dict:
+		# 	current_class = class_dict[key]
+		# 	print(current_class['level'] , " ",  current_class['test'])
+		
+		return render(request, 'CAMDAIS/makeTest.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'class_dict': class_dict})
+	
+	elif request.method == 'POST':
+		# level_str = request.POST.get('level')
+		level = request.POST.get('level')
+		my_class = classes.objects.get(Level = level)
+		instituteId = request.POST.get('instituteId')
+		my_institute = institute.objects.get(id = instituteId)
+		startDate = datetime.now()
+		endDate = datetime.now() + timedelta(days=5)
+		# print("start date ", startDate, " ", endDate)
+		current_test = currentInstituteTest.objects.filter(institute = my_institute)
+		print(current_test)
+		if current_test.exists():
+			return render(request, 'CAMDAIS/makeTest.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'class_dict': class_dict, 'message': "Already there is a running test for this class"})
+		else:
+			new_currentInstituteTest = currentInstituteTest(institute = my_institute, class_id = my_class, startDate = startDate, endDate = endDate)
+			new_currentInstituteTest.save()
+			if new_currentInstituteTest.id:
+				return redirect('Dashboard')
+			else:
+				return render(request, 'CAMDAIS/makeTest.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'class_dict': class_dict, 'message': "something is wrong, try again"})
+			
 
 def SuperUser(request):
 	return render(request, "CAMDAIS/superUser.html")

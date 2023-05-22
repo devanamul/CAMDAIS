@@ -26,6 +26,7 @@ urlpatterns = [
     path('instituteForm/', views.insttuteForm, name='InsttuteForm'),
     path('studentForm/', views.studentForm, name='StudentForm'),
     path('institutePage/', views.insttutePage, name='InsttutePage'),
+    path('makeTest/', views.makeTest, name='MakeTest'),
     path('superuser/', views.SuperUser, name='superUser'),
     
 ]

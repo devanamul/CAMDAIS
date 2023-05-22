@@ -18,7 +18,7 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js">
     </script>
-    <link rel="stylesheet" type="text/css" href="../static/CAMDAIS/institutePage.css">
+    <link rel="stylesheet" type="text/css" href="../static/CAMDAIS/makeTest.css">
     <title>Dashboard</title>
 </head>
 
@@ -72,17 +72,34 @@
             <!-- put everything here -->
             <div style="font-size: 30px" class="dashboard">{{my_institute.name}}</div>
             <hr class="line">
-            <div class="inner-container">
-                <a href="{% url 'MakeTest' %}">Make Test</a>
-                <a href="">Test History</a>
-            </div>
-            <div class="recent">
-                <label style="font-size: 30px">Recent Test</label>
-                <hr class="line">
-                <table>
-                    
-                </table>
-            </div>
+             <form class="" action="{% url 'MakeTest' %}" method="POST">
+                {% csrf_token %}
+            <div style="padding-left: 5px; align-items: center; justify-content: center;" class="ui link cards">
+            {% for each, current_class in class_dict.items %}
+            
+                <input type="hidden" name="level" value="{{current_class.level}}">
+                <input type="hidden" name="instituteId" value="{{my_institute.id}}">
+              <button name="create" type="submit" style="width: 295px;
+              display: flex; justify-content: space-around; align-items: center; 
+              height: 100px;
+              color: black;
+              background:#83ACB5;
+              border-radius: 15px;" onMouseOver="this.style.backgroundColor='rgba(0, 106, 78, 0.842)'"
+                  onMouseOut="this.style.backgroundColor='#83ACB5'" class="card">
+
+                <p style="display: flex; justify-content: space-around; color: white;">Deficiency and Anxiety Test </p>
+                <p style="display: flex; justify-content: space-around; color: white; width: 90%"><span>Class {{current_class.level}}</span><span>{{current_class.test}} Tests</span></p>
+
+              </button>
+           
+            {% endfor %}
+        </div>
+         </form>
+         {% if message %}
+                <div class="ui floating message">
+                  <p>{{message}}</p>
+                </div>
+               {% endif %}
         </div>
     </div>
     
