@@ -18,8 +18,8 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js">
     </script>
-    <link rel="stylesheet" type="text/css" href="../static/CAMDAIS/studentPage.css">
-    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="../static/CAMDAIS/question.css">
+    <title>Exam</title>
 </head>
 
 <body>
@@ -70,12 +70,34 @@
     <div class="pusher" style="background: whitesmoke; height: 700px;">
         <div class="ui container" style="padding-top: 100px; height: 100%;">
             <!-- put everything here -->
-            <div style="font-size: 30px" class="dashboard">{{my_institute.name}}</div>
+            <p style="font-size: 30px">{{my_institute.name}}</p>
+            <p style="font-size: 20px">Hi, dear {{user.first_name}} {{user.last_name}}, you have to answer all the questions, then we identify your deficiency and anxiety on maths, Thank you and Best of luck</p>
+            <br>
+            {% for each, current_dict in mytest_dict.items %}
+            <div class="question-answer">
+            <div style="font-size: 30px" class="dashboard">{{each}}</div>
             <hr class="line">
-            <div class="inner-container">
-                <a href="{% url 'TestPage' %}">Appear in a Test</a>
-                <a href="">My Result History</a>
+            {% for each, exam in current_dict.items %}
+            {% for each, inner_exam in exam.items %}
+            <div>
+            <p>{{inner_exam.question}}</p>
+            <!-- <p>{{inner_exam.ans1}}</p>
+            <p>{{inner_exam.ans2}}</p>
+            <p>{{inner_exam.ans3}}</p>
+            <p>{{inner_exam.ans4}}</p> -->
+            <input type="radio" name="answer" value="{{inner_exam.ans1}}"> a) {{inner_exam.ans1}}<br>
+            <input type="radio" name="answer" value="{{inner_exam.ans2}}"> b) {{inner_exam.ans2}}<br>
+            <input type="radio" name="answer" value="{{inner_exam.ans3}}"> c) {{inner_exam.ans3}}<br>
+            <input type="radio" name="answer" value="{{inner_exam.ans4}}"> d) {{inner_exam.ans4}}<br>
             </div>
+            {% endfor %}
+            {% endfor %}
+            </div>
+            <br>
+            {% endfor %}
+
+        <button onMouseOver="this.style.backgroundColor='rgba(0, 106, 78, 0.842)'"
+                  onMouseOut="this.style.backgroundColor='#83ACB5'">Submit your answers</button>
         </div>
     </div>
     

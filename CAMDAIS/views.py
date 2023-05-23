@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import institute, systemAdmin, student, classes, test, currentInstituteTest
 from datetime import datetime, timedelta
+import random
 
 
 def home(request):
@@ -38,7 +39,11 @@ def signin(request):
 			return render(request, 'CAMDAIS/login.html')
 		else:
 			login(request, user)
-			return redirect('Dashboard')
+			if user.is_superuser:
+				return redirect('SuperUser')
+			else:
+				return redirect('Dashboard')
+			
 	elif request.method == 'POST' and 'SignUp' in request.POST:
 		username = request.POST.get('username')
 		email = request.POST.get('email')
@@ -141,6 +146,71 @@ def studentPage(request):
 			is_student = student.objects.get(author=u)
 			my_institute = institute.objects.get(id=is_student.institute.id)
 		return render(request, 'CAMDAIS/studentPage.html', {"user": u, 'userType': userType, 'my_institute':  my_institute})
+
+def attempt(request):
+	if request.method == 'GET':
+		userType = None;
+		u = request.user
+		# is_admin = systemAdmin.objects.filter(author=u)
+		# is_student = student.objects.filter(author=u)
+		# my_institute = None
+		# if is_admin.exists():
+		# 	userType = 'admin'
+		# 	print(userType)
+		# 	is_admin = systemAdmin.objects.get(author=u)
+		# 	my_institute = institute.objects.get(id=is_admin.institute.id)
+		# elif is_student.exists():
+		userType = 'student'
+		is_student = student.objects.get(author=u)
+		my_institute = institute.objects.get(id=is_student.institute.id)
+
+
+		test_list = []
+
+		classN = classes.objects.get(Level=is_student.level)
+		for each in ['Maths_Anxiety_symptoms', 'Past_Experience', 'Working_Memory', 'Numerical_skill', 'Algebra', 'Geometry', 'Arithmetic', 'Learning_Habit', 'IQ']:
+			if getattr(classN, each):
+				if each == 'Maths_Anxiety_symptoms':
+					each = 'Mathematical Anxiety'
+				elif each == 'Past_Experience':
+					each = 'Past Experience'
+				elif each == 'Working_Memory':
+					each = 'Working Memory'
+				elif each == 'Numerical_skill':
+					each = 'Numerical Skill'
+				elif each == 'Learning_Habit':
+					each = 'Learning Habit'
+				test_list.append(each)
+				# print(each)
+		# class_dict[f'class_{i}'] = {'level': i, 'test': true_count}
+
+		mytest_dict = {}
+
+		for each in test_list:
+			# print(each)
+			tests = test.objects.filter(name = each)
+			random_tests = random.sample(list(tests), 5)
+			inner_dict = {}
+			count = 0
+			for i in random_tests:
+				count += 1
+				ans = [i.rightAns, i.ans2, i.ans3, i.ans4]
+				random.shuffle(ans)
+				# print(i.question, " ", ans)
+				inner_dict[f'{str(count)+i.name}'] = {'question': i.question, 'ans1': ans[0], 'ans2': ans[1], 'ans3': ans[2], 'ans4': ans[3]}
+				
+			
+			mytest_dict[f'{each}'] = {'exam': inner_dict}
+		# for each, current_dict in mytest_dict.items():
+		# 	print(each)
+		# 	for each, exam in current_dict.items():
+		# 		for each, inner_exam in exam.items():
+		# 			print(inner_exam['question'])
+			# print(current_dict['exam'])
+		# for each in mytest_dict:
+		# 	print(mytest_dict[each])
+		
+		return render(request, 'CAMDAIS/question.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'mytest_dict': mytest_dict})
 
 def makeTest(request):
 	userType = None;

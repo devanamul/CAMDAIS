@@ -28,6 +28,7 @@ urlpatterns = [
     path('institutePage/', views.insttutePage, name='InsttutePage'),
     path('studentPage/', views.studentPage, name='StudentPage'),
     path('makeTest/', views.makeTest, name='MakeTest'),
-    path('superuser/', views.SuperUser, name='superUser'),
+    path('testPage/', views.attempt, name='TestPage'),
+    path('superuser/', views.SuperUser, name='SuperUser'),
     
 ]
