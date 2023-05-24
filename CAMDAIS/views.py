@@ -163,54 +163,62 @@ def attempt(request):
 		userType = 'student'
 		is_student = student.objects.get(author=u)
 		my_institute = institute.objects.get(id=is_student.institute.id)
-
-
-		test_list = []
-
+		print('level-', is_student.id, ' institute', my_institute.id)
 		classN = classes.objects.get(Level=is_student.level)
-		for each in ['Maths_Anxiety_symptoms', 'Past_Experience', 'Working_Memory', 'Numerical_skill', 'Algebra', 'Geometry', 'Arithmetic', 'Learning_Habit', 'IQ']:
-			if getattr(classN, each):
-				if each == 'Maths_Anxiety_symptoms':
-					each = 'Mathematical Anxiety'
-				elif each == 'Past_Experience':
-					each = 'Past Experience'
-				elif each == 'Working_Memory':
-					each = 'Working Memory'
-				elif each == 'Numerical_skill':
-					each = 'Numerical Skill'
-				elif each == 'Learning_Habit':
-					each = 'Learning Habit'
-				test_list.append(each)
+		is_test_exist = currentInstituteTest.objects.filter(institute=my_institute, class_id = classN)
+
+		if is_test_exist.exists():
+
+			test_list = []
+
+			print("my level -", is_student.level)
+			for each in ['Maths_Anxiety_symptoms', 'Past_Experience', 'Working_Memory', 'Numerical_skill', 'Algebra', 'Geometry', 'Arithmetic', 'Learning_Habit', 'IQ']:
+				if getattr(classN, each):
+					if each == 'Maths_Anxiety_symptoms':
+						each = 'Mathematical Anxiety'
+					elif each == 'Past_Experience':
+						each = 'Past Experience'
+					elif each == 'Working_Memory':
+						each = 'Working Memory'
+					elif each == 'Numerical_skill':
+						each = 'Numerical Skill'
+					elif each == 'Learning_Habit':
+						each = 'Learning Habit'
+					test_list.append(each)
+					# print(each)
+			# class_dict[f'class_{i}'] = {'level': i, 'test': true_count}
+
+			mytest_dict = {}
+
+			for each in test_list:
 				# print(each)
-		# class_dict[f'class_{i}'] = {'level': i, 'test': true_count}
-
-		mytest_dict = {}
-
-		for each in test_list:
-			# print(each)
-			tests = test.objects.filter(name = each)
-			random_tests = random.sample(list(tests), 5)
-			inner_dict = {}
-			count = 0
-			for i in random_tests:
-				count += 1
-				ans = [i.rightAns, i.ans2, i.ans3, i.ans4]
-				random.shuffle(ans)
-				# print(i.question, " ", ans)
-				inner_dict[f'{str(count)+i.name}'] = {'question': i.question, 'ans1': ans[0], 'ans2': ans[1], 'ans3': ans[2], 'ans4': ans[3]}
+				tests = test.objects.filter(name = each, class_id = classN)
+				random_tests = random.sample(list(tests), 5)
+				inner_dict = {}
+				count = 0
+				for i in random_tests:
+					count += 1
+					ans = [i.rightAns, i.ans2, i.ans3, i.ans4]
+					random.shuffle(ans)
+					# print(i.question, " ", ans)
+					inner_dict[f'{str(count)+i.name}'] = {'question': i.question, 'ans1': ans[0], 'ans2': ans[1], 'ans3': ans[2], 'ans4': ans[3]}
+					
 				
-			
-			mytest_dict[f'{each}'] = {'exam': inner_dict}
-		# for each, current_dict in mytest_dict.items():
-		# 	print(each)
-		# 	for each, exam in current_dict.items():
-		# 		for each, inner_exam in exam.items():
-		# 			print(inner_exam['question'])
-			# print(current_dict['exam'])
-		# for each in mytest_dict:
-		# 	print(mytest_dict[each])
-		
-		return render(request, 'CAMDAIS/question.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'mytest_dict': mytest_dict})
+				mytest_dict[f'{each}'] = {'exam': inner_dict}
+			# for each, current_dict in mytest_dict.items():
+			# 	print(each)
+			# 	for each, exam in current_dict.items():
+			# 		for each, inner_exam in exam.items():
+			# 			print(inner_exam['question'])
+				# print(current_dict['exam'])
+			# for each in mytest_dict:
+			# 	print(mytest_dict[each])
+			print("check-",mytest_dict)
+			return render(request, 'CAMDAIS/question.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'mytest_dict': mytest_dict})
+		else:
+			print("not setisfied")
+			return render(request, 'CAMDAIS/studentPage.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'message': "You don't have any test now"})
+
 
 def makeTest(request):
 	userType = None;
@@ -247,13 +255,14 @@ def makeTest(request):
 	elif request.method == 'POST':
 		# level_str = request.POST.get('level')
 		level = request.POST.get('level')
+		print('level - ',level)
 		my_class = classes.objects.get(Level = level)
 		instituteId = request.POST.get('instituteId')
 		my_institute = institute.objects.get(id = instituteId)
 		startDate = datetime.now()
 		endDate = datetime.now() + timedelta(days=5)
 		# print("start date ", startDate, " ", endDate)
-		current_test = currentInstituteTest.objects.filter(institute = my_institute)
+		current_test = currentInstituteTest.objects.filter(institute = my_institute, class_id = my_class)
 		print(current_test)
 		if current_test.exists():
 			return render(request, 'CAMDAIS/makeTest.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'class_dict': class_dict, 'message': "Already there is a running test for this class"})

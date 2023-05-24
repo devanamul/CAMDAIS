@@ -76,6 +76,11 @@
                 <a href="{% url 'TestPage' %}">Appear in a Test</a>
                 <a href="">My Result History</a>
             </div>
+            {% if message %}
+                <div class="ui floating message">
+                  <p>{{message}}</p>
+                </div>
+               {% endif %}
         </div>
     </div>
     

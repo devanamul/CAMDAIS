@@ -81,10 +81,6 @@
             {% for each, inner_exam in exam.items %}
             <div>
             <p>{{inner_exam.question}}</p>
-            <!-- <p>{{inner_exam.ans1}}</p>
-            <p>{{inner_exam.ans2}}</p>
-            <p>{{inner_exam.ans3}}</p>
-            <p>{{inner_exam.ans4}}</p> -->
             <input type="radio" name="answer" value="{{inner_exam.ans1}}"> a) {{inner_exam.ans1}}<br>
             <input type="radio" name="answer" value="{{inner_exam.ans2}}"> b) {{inner_exam.ans2}}<br>
             <input type="radio" name="answer" value="{{inner_exam.ans3}}"> c) {{inner_exam.ans3}}<br>

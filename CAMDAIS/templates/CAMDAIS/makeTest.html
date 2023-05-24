@@ -72,11 +72,11 @@
             <!-- put everything here -->
             <div style="font-size: 30px" class="dashboard">{{my_institute.name}}</div>
             <hr class="line">
-             <form class="" action="{% url 'MakeTest' %}" method="POST">
-                {% csrf_token %}
+             
             <div style="padding-left: 5px; align-items: center; justify-content: center;" class="ui link cards">
             {% for each, current_class in class_dict.items %}
-            
+            <form style="margin: 15px" class="" action="{% url 'MakeTest' %}" method="POST">
+                {% csrf_token %}
                 <input type="hidden" name="level" value="{{current_class.level}}">
                 <input type="hidden" name="instituteId" value="{{my_institute.id}}">
               <button name="create" type="submit" style="width: 295px;
@@ -91,10 +91,11 @@
                 <p style="display: flex; justify-content: space-around; color: white; width: 90%"><span>Class {{current_class.level}}</span><span>{{current_class.test}} Tests</span></p>
 
               </button>
+              </form>
            
             {% endfor %}
         </div>
-         </form>
+         
          {% if message %}
                 <div class="ui floating message">
                   <p>{{message}}</p>
