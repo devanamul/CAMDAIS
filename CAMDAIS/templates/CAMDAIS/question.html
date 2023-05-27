@@ -68,14 +68,14 @@
     </div>  
 
     <div class="pusher" style="background: whitesmoke; height: 700px;">
-        <div class="ui container" style="padding-top: 100px; height: 100%;">
+        <div class="ui container" style="padding-top: 100px; height: 100%; width: 80%;">
             <!-- put everything here -->
             <p style="font-size: 30px">{{my_institute.name}}</p>
             <p style="font-size: 20px">Hi, dear {{user.first_name}} {{user.last_name}}, you have to answer all the questions, then we identify your deficiency and anxiety on maths, Thank you and Best of luck</p>
             <br>
             {% for each, current_dict in mytest_dict.items %}
             <div class="question-answer">
-            <div style="font-size: 30px" class="dashboard">{{each}}</div>
+            <div style="font-size: 30px; text-align: center;" class="dashboard">{{each}}</div>
             <hr class="line">
             {% for each, exam in current_dict.items %}
             {% for each, inner_exam in exam.items %}
