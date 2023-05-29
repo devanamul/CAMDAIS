@@ -213,12 +213,49 @@ def attempt(request):
 				# print(current_dict['exam'])
 			# for each in mytest_dict:
 			# 	print(mytest_dict[each])
-			print("check-",mytest_dict)
+			# print("check-",mytest_dict)
 			return render(request, 'CAMDAIS/question.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'mytest_dict': mytest_dict})
 		else:
 			print("not setisfied")
 			return render(request, 'CAMDAIS/studentPage.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'message': "You don't have any test now"})
 
+	elif request.method == 'POST':
+		catgory = request.POST.getlist('each[]')
+		questions = request.POST.getlist('question[]')
+		print(questions)
+		answers = []
+		print(request.POST)
+		i = 1
+		total_questions_per_category = 5
+		for each in catgory:
+			answer_key = f'answer{each}_{i}{each}'
+			if i == total_questions_per_category:
+				i = 1
+			else:
+				i = i+1
+			print(answer_key)
+			answer = request.POST.get(answer_key)
+			answers.append(answer)
+
+		correct_answers_count = {}
+
+		for each, question, answer in zip(catgory, questions, answers):
+			curr_question = test.objects.get(question=question)
+			if curr_question.rightAns == answer:
+				correct_answers_count[each] = correct_answers_count.get(each, 0) + 1
+			else:
+				print(curr_question.rightAns, " ", "ans ", answer, "not correct")
+
+		  # Assuming 5 questions per category
+		percentage_correct_answers = {}
+		for each in catgory:
+			count = correct_answers_count.get(each, 0)
+			print(count)
+			percentage_correct = (count / total_questions_per_category) * 100
+			percentage_correct_answers[each] = percentage_correct
+		for each, percentage in percentage_correct_answers.items():
+			print(f"{each}: {percentage}%")
+		return redirect('Dashboard')
 
 def makeTest(request):
 	userType = None;

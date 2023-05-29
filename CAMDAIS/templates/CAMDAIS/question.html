@@ -73,18 +73,23 @@
             <p style="font-size: 30px">{{my_institute.name}}</p>
             <p style="font-size: 20px">Hi, dear {{user.first_name}} {{user.last_name}}, you have to answer all the questions, then we identify your deficiency and anxiety on maths, Thank you and Best of luck</p>
             <br>
+            <!-- Form -->
+            <form method="POST" action="/testPage/">
+                {% csrf_token %}
             {% for each, current_dict in mytest_dict.items %}
             <div class="question-answer">
             <div style="font-size: 30px; text-align: center;" class="dashboard">{{each}}</div>
             <hr class="line">
-            {% for each, exam in current_dict.items %}
-            {% for each, inner_exam in exam.items %}
+            {% for each_exam, exam in current_dict.items %}
+            {% for each_inner_exam, inner_exam in exam.items %}
+            <input type="hidden" name="each[]" value="{{ each }}">
+            <input type="hidden" name="question[]" value="{{ inner_exam.question }}">
             <div>
             <p>{{inner_exam.question}}</p>
-            <input type="radio" name="answer" value="{{inner_exam.ans1}}"> a) {{inner_exam.ans1}}<br>
-            <input type="radio" name="answer" value="{{inner_exam.ans2}}"> b) {{inner_exam.ans2}}<br>
-            <input type="radio" name="answer" value="{{inner_exam.ans3}}"> c) {{inner_exam.ans3}}<br>
-            <input type="radio" name="answer" value="{{inner_exam.ans4}}"> d) {{inner_exam.ans4}}<br>
+            <input type="radio" name="answer{{ each }}_{{ each_inner_exam }}" value="{{inner_exam.ans1}}"> a) {{inner_exam.ans1}}<br>
+            <input type="radio" name="answer{{ each }}_{{ each_inner_exam }}" value="{{inner_exam.ans2}}"> b) {{inner_exam.ans2}}<br>
+            <input type="radio" name="answer{{ each }}_{{ each_inner_exam }}" value="{{inner_exam.ans3}}"> c) {{inner_exam.ans3}}<br>
+            <input type="radio" name="answer{{ each }}_{{ each_inner_exam }}" value="{{inner_exam.ans4}}"> d) {{inner_exam.ans4}}<br>
             </div>
             {% endfor %}
             {% endfor %}
@@ -92,8 +97,8 @@
             <br>
             {% endfor %}
 
-        <button onMouseOver="this.style.backgroundColor='rgba(0, 106, 78, 0.842)'"
-                  onMouseOut="this.style.backgroundColor='#83ACB5'">Submit your answers</button>
+        <button onMouseOver="this.style.backgroundColor='rgba(0, 106, 78, 0.842)'" onMouseOut="this.style.backgroundColor='#83ACB5'">Submit your answers</button>
+        </form>
         </div>
     </div>
     
