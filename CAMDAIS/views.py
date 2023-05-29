@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import institute, systemAdmin, student, classes, test, currentInstituteTest
+from .models import institute, systemAdmin, student, classes, test, currentInstituteTest, history
 from datetime import datetime, timedelta
 import random
 
@@ -148,25 +148,18 @@ def studentPage(request):
 		return render(request, 'CAMDAIS/studentPage.html', {"user": u, 'userType': userType, 'my_institute':  my_institute})
 
 def attempt(request):
+	u = request.user
+	is_student = student.objects.get(author=u)
+	my_institute = institute.objects.get(id=is_student.institute.id)
 	if request.method == 'GET':
 		userType = None;
-		u = request.user
-		# is_admin = systemAdmin.objects.filter(author=u)
-		# is_student = student.objects.filter(author=u)
-		# my_institute = None
-		# if is_admin.exists():
-		# 	userType = 'admin'
-		# 	print(userType)
-		# 	is_admin = systemAdmin.objects.get(author=u)
-		# 	my_institute = institute.objects.get(id=is_admin.institute.id)
-		# elif is_student.exists():
 		userType = 'student'
-		is_student = student.objects.get(author=u)
-		my_institute = institute.objects.get(id=is_student.institute.id)
 		print('level-', is_student.id, ' institute', my_institute.id)
 		classN = classes.objects.get(Level=is_student.level)
+		my_history = history.objects.filter(examinee = u, test_type = 0)
+		if my_history.exists():
+			return render(request, 'CAMDAIS/studentPage.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'message': "You don't have any test now"})
 		is_test_exist = currentInstituteTest.objects.filter(institute=my_institute, class_id = classN)
-
 		if is_test_exist.exists():
 
 			test_list = []
@@ -216,15 +209,15 @@ def attempt(request):
 			# print("check-",mytest_dict)
 			return render(request, 'CAMDAIS/question.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'mytest_dict': mytest_dict})
 		else:
-			print("not setisfied")
+			# print("not setisfied")
 			return render(request, 'CAMDAIS/studentPage.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'message': "You don't have any test now"})
 
 	elif request.method == 'POST':
 		catgory = request.POST.getlist('each[]')
 		questions = request.POST.getlist('question[]')
-		print(questions)
+		# print(questions)
 		answers = []
-		print(request.POST)
+		# print(request.POST)
 		i = 1
 		total_questions_per_category = 5
 		for each in catgory:
@@ -243,16 +236,30 @@ def attempt(request):
 			curr_question = test.objects.get(question=question)
 			if curr_question.rightAns == answer:
 				correct_answers_count[each] = correct_answers_count.get(each, 0) + 1
-			else:
-				print(curr_question.rightAns, " ", "ans ", answer, "not correct")
+				# print(curr_question.rightAns, " ", "ans ", answer, " correct")
+			# else:
+				# print(curr_question.rightAns, " ", "ans ", answer, "not correct")
 
 		  # Assuming 5 questions per category
 		percentage_correct_answers = {}
 		for each in catgory:
 			count = correct_answers_count.get(each, 0)
-			print(count)
+			# print(count)
 			percentage_correct = (count / total_questions_per_category) * 100
+			if each == 'Mathematical Anxiety':
+				each = 'Maths_Anxiety_symptoms'
+			elif each == 'Past Experience':
+				each = 'Past_Experience'
+			elif each == 'Working Memory':
+				each = 'Working_Memory'
+			elif each == 'Numerical Skill':
+				each = 'Numerical_skill'
+			elif each == 'Learning Habit':
+				each = 'Learning_Habit'
 			percentage_correct_answers[each] = percentage_correct
+		my_admin = systemAdmin.objects.get(institute = my_institute)
+		newhistory = history(test_type = 0, examiner=my_admin.author, examinee = u, level = is_student.level, **percentage_correct_answers)
+		newhistory.save()
 		for each, percentage in percentage_correct_answers.items():
 			print(f"{each}: {percentage}%")
 		return redirect('Dashboard')
