@@ -158,7 +158,7 @@ def attempt(request):
 		classN = classes.objects.get(Level=is_student.level)
 		my_history = history.objects.filter(examinee = u, test_type = 0)
 		if my_history.exists():
-			return render(request, 'CAMDAIS/studentPage.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'message': "You don't have any test now"})
+			return render(request, 'CAMDAIS/studentPage.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'message': "You have already appeared this test"})
 		is_test_exist = currentInstituteTest.objects.filter(institute=my_institute, class_id = classN)
 		if is_test_exist.exists():
 
@@ -318,6 +318,35 @@ def makeTest(request):
 			else:
 				return render(request, 'CAMDAIS/makeTest.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'class_dict': class_dict, 'message': "something is wrong, try again"})
 			
+def AppearedResult(request):
+	u = request.user
+	is_student = student.objects.get(author=u)
+	my_institute = institute.objects.get(id=is_student.institute.id)
+	userType = 'student'
+	# here i have to work for general user, this comment will remined me
+	my_history = history.objects.get(examinee = u, test_type = 0)
+	if my_history.id:
+		result_dict = {}
+		for column, value in my_history.__dict__.items():
+			print('column-',column, ': ', value)
+			if value != None and column in ['Maths_Anxiety_symptoms', 'Past_Experience', 'Working_Memory', 'Numerical_skill', 'Algebra', 'Geometry', 'Arithmetic', 'Learning_Habit', 'IQ']:
+				if column == 'Maths_Anxiety_symptoms':
+					column = 'Mathematical Anxiety'
+					value = str(100-float(value))
+				elif column == 'Past_Experience':
+					column = 'Past Experience'
+				elif column == 'Working_Memory':
+					column = 'Working Memory'
+				elif column == 'Numerical_skill':
+					column = 'Numerical Skill'
+				elif column == 'Learning_Habit':
+					column = 'Learning Habit'
+
+				result_dict[column] = f'{value}%'
+		print(result_dict)
+		return render(request, 'CAMDAIS/resultAppeared.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'result_dict': result_dict})
+	else:
+		return render(request, 'CAMDAIS/resultAppeared.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'message': 'You did not appeared any test yet'})
 
 def SuperUser(request):
 	return render(request, "CAMDAIS/superUser.html")

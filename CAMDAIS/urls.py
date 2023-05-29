@@ -29,6 +29,7 @@ urlpatterns = [
     path('studentPage/', views.studentPage, name='StudentPage'),
     path('makeTest/', views.makeTest, name='MakeTest'),
     path('testPage/', views.attempt, name='TestPage'),
+    path('resultAppeared/', views.AppearedResult, name='ResultAppeared'),
     path('superuser/', views.SuperUser, name='SuperUser'),
     
 ]
