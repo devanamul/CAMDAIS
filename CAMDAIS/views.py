@@ -178,7 +178,7 @@ def attempt(request):
 					elif each == 'Learning_Habit':
 						each = 'Learning Habit'
 					test_list.append(each)
-					# print(each)
+					print(each)
 			# class_dict[f'class_{i}'] = {'level': i, 'test': true_count}
 
 			mytest_dict = {}
@@ -233,7 +233,7 @@ def attempt(request):
 		correct_answers_count = {}
 
 		for each, question, answer in zip(catgory, questions, answers):
-			curr_question = test.objects.get(question=question)
+			curr_question = test.objects.filter(question=question, name=each).first()
 			if curr_question.rightAns == answer:
 				correct_answers_count[each] = correct_answers_count.get(each, 0) + 1
 				# print(curr_question.rightAns, " ", "ans ", answer, " correct")
