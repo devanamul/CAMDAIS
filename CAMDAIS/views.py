@@ -7,6 +7,95 @@ from datetime import datetime, timedelta
 import random
 
 
+def comments(name, value):
+	# math anxrity
+	value = float(value)
+	if name == "Mathematical Anxiety":
+		if value < 15:
+			return "Do not have visible sign of nervousness or tension. This is very good and may be because of good preparation and positive disposition about Mathematics."
+		elif value <35:
+			return "Exhibit moderate level of nervousness which is healthy to keep a student focused and attentive."
+		else:
+			return "Exhibit a severe and unhealthy level of nervousness or tension which sometimes stem from very poor preparation/huge lack of basic knowledge/ tremendous pressure doing good which is not justified."
+	# past exp
+	elif name == "Past Experience":
+		if value < 30:
+			return "Seems to have pleasant learning experience and feels no discomfort towards Mathematical learning."
+		elif value >=30 and value <= 45:
+			return "Have good past experience in math learning"
+		elif value < 60:
+			return "Somewhat discontent about Mathematical learning that may be stemmed from lack of proper guidance and lack of practice."
+		else:
+			return "Has high level of discomfort towards Mathematical learning that stemmed either from unpleasant past experience or from poor teaching methodology and negative life experience associated with learning mathematics."
+	# Working Memory
+	
+	# Numerical Skill
+	elif name == "Numerical Skill":
+		if value < 65:
+			return "Very poor! Do not have required basic knowledge in mathematical operations."
+		elif value >= 65 and value < 80:
+			return "Satisfactory! Have basic knowledge in mathematical operations but have lacking in composite manipulation."
+		elif value >=80 and value <= 90:
+			return "Good! Indicates that the test taker possesses fairly good ability to solve basic arithmetic operations and perform estimates."
+		else:
+			return "Excellent! Indicates that the test taker possesses higher ability to solve basic arithmetic operations and perform estimates."
+
+	# Learning Habit
+	elif name == "Learning Habit":
+		if value < 30:
+			return "Very confident and has positive disposition towards learning Math."
+		elif value < 45:
+			return "Has positive attitude and good study habits."
+		elif value <=60:
+			return "Has lack of confidence and developed somewhat negative attitude"
+		else:
+			return "Has wrong perceptions and negative attitude towards learning mathematics."
+	
+	# Arithmetic
+	elif name == "Arithmetic":
+		if value < 55:
+			return "Very poor! Do not have required basic knowledge in mathematical operations."
+		elif value >=55 and value <= 70:
+			return "Satisfactory! Have basic knowledge in mathematical operations but seems to have difficulties in statement and combined operational problems."
+		elif value <= 85:
+			return "Good! Have required basic knowledge and problem-solving skills."
+		else:
+			return "Excellent! Have solid basic knowledge in mathematical operations and strong manipulative skills."
+
+	# Algebra
+	elif name == "Algebra":
+		if value < 55:
+			return "Very poor! Have basic problem in definition, algebraic terminology, and manipulation."
+		elif value >=55 and value <= 70:
+			return "Satisfactory! Understands the basic concepts but have problems in carrying out instructions and algebraic manipulation."
+		elif value <= 85:
+			return "Good Performance! Have required basic knowledge and problem-solving skills."
+		else:
+			return "Excellent performance! Have strong basic knowledge in algebra."
+
+	# Geometry
+	elif name == "Geometry":
+		if value < 55:
+			return "Very poor! Have basic problem in geometrical literacy and application."
+		elif value >=55 and value <= 70:
+			return "Satisfactory! Have fair knowledge in geometry but have problems in applying them in solving problems."
+		elif value <= 85:
+			return "Good Performance: Understands and can use geometrical concepts to solve problems."
+		else:
+			return "Excellent performance! Have strong and deeper knowledge in geometry."
+
+	# IQ
+	elif name == "IQ":
+		if value < 35:
+			return "Extremely Low."
+		elif value < 50:
+			return "Below Average"
+		elif value <70:
+			return "Average"
+		elif value <85:
+			return "Above Average"
+		else:
+			return "Superior"
 def home(request):
 	return render(request, "CAMDAIS/home.html")
 
@@ -338,14 +427,17 @@ def AppearedResult(request):
 						value = str(100-float(value))
 					elif column == 'Past_Experience':
 						column = 'Past Experience'
+						value = str(100-float(value))
 					elif column == 'Working_Memory':
 						column = 'Working Memory'
 					elif column == 'Numerical_skill':
 						column = 'Numerical Skill'
 					elif column == 'Learning_Habit':
 						column = 'Learning Habit'
+						value = str(100-float(value))
 
-					result_dict[column] = f'{value}%'
+					comment = comments(column, value)
+					result_dict[column] = f'{comment}({value}%)'
 			return render(request, 'CAMDAIS/resultAppeared.html', {"user": u, 'userType': userType, 'my_institute':  my_institute, 'result_dict': result_dict})
 	else:
 		print("not seticfied")

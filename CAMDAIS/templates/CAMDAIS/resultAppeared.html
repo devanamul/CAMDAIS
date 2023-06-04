@@ -70,11 +70,16 @@
     <div class="pusher" style="background: whitesmoke; height: 700px;">
         <div class="ui container" style="padding-top: 100px; height: 100%; width: 80%;">
             <!-- put everything here -->
-           <div>
+            <p style="font-size: 20px" class="dashboard">{{user.first_name}} {{user.last_name}}</p>
+            <p style="font-size: 30px" class="dashboard">{{my_institute.name}}</p>
+            <hr class="line">
+           <div class="result">
+            <p>Result of the Mathematical Anxiety and Deficiency</p>
+            <ol>
             {% for each, value in result_dict.items %}
-               <p>{{each}}: {{value}}</p>
+               <li style="font-size: 20px"><span >{{each}}:</span><br> {{value}}</li>
             {% endfor %}
-            
+            </ol>
            </div>
         </div>
     </div>
