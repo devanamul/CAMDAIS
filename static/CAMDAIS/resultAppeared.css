@@ -1,0 +1,23 @@
+.dashboard{
+	text-align: center;
+}
+
+.result{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.result span {
+	font-style: italic;
+	font-weight: bold;
+}
+.result li {
+	margin: 15px;
+}
+
+.result p{
+	font-size: 20px;
+	font-weight: bold;
+}
